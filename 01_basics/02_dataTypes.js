@@ -5,6 +5,6 @@ console.log(3+3) ; console.log("hello")
 
 let name = "Swapnil";
 let age=23;
-let isLoggedIn = false
+let isLoggedIn = false;
 console.log(typeof null)
 console.log(typeof undefined)
