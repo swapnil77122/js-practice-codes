@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List</title>
+  <style>
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #754242;
+      text-align: left;
+    }
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    #addBtn {
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="addBtn">Add</button>
+
+  <table id="todoTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Todo</th>
+        <th>Completed</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    const tableBody = document.querySelector("#todoTable tbody");
+    const addBtn = document.getElementById("addBtn");
+
+    // Fetch todos from the API
+    fetch('https://dummyjson.com/todos')
+      .then(response => response.json())
+      .then(data => {
+        data.todos.forEach(todo => addRow(todo));
+      });
+
+    // Function to add a row to the table
+    function addRow(todo) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${todo.id}</td>
+        <td>${todo.todo}</td>
+        <td>${todo.completed ? 'Yes' : 'No'}</td>
+        <td><button class="deleteBtn">Delete</button></td>
+      `;
+      row.querySelector(".deleteBtn").addEventListener('click', () => {
+        row.remove();
+      });
+      tableBody.appendChild(row);
+    }
+
+    // Add dummy todo on button click
+    addBtn.addEventListener('click', () => {
+      const dummyTodo = {
+        id: Date.now(),
+        todo: "newly added",
+        completed: false
+      };
+      addRow(dummyTodo);
+    });
+  </script>
+
+</body>
+</html>
